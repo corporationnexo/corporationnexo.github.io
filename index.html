@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXO Store - Tienda Virtual Profesional</title>
+  
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f4f6f8',
+              100: '#e5e9ee',
+              500: '#64748b',
+              800: '#1e293b',
+              900: '#0f172a',
+              gold: '#d4af37',
+              accent: '#3b82f6'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; background-color: #0b0c10; color: #e2e8f0; }
+    .glass { background: rgba(18, 21, 30, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass-card { background: rgba(22, 27, 38, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
+    .glass-card:hover { border-color: rgba(212, 175, 55, 0.3); transform: translateY(-2px); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0c10; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-gold selection:text-black">
+
+  <!-- NOTIFICACIONES TOAST -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- NAVEGACIÓN PRINCIPAL RESPONSIVA -->
+  <header class="sticky top-0 z-40 glass border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="#" onclick="showView('home')" class="flex items-center gap-3 group">
+        <div id="brand-logo-container" class="w-10 h-10 rounded-lg bg-gradient-to-tr from-brand-gold to-yellow-200 flex items-center justify-center text-black font-bold text-xl shadow-lg shadow-brand-gold/10 group-hover:scale-105 transition-transform overflow-hidden">
+          <span id="brand-logo-text">N</span>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold tracking-wider text-white block leading-none">NEXO</span>
+          <span class="text-xs text-brand-gold font-medium tracking-widest uppercase">Store</span>
+        </div>
+      </a>
+
+      <!-- Menú Escritorio -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <button onclick="showView('home')" class="hover:text-brand-gold transition-colors">Inicio</button>
+        <button onclick="showView('catalog')" class="hover:text-brand-gold transition-colors">Catálogo</button>
+        <button onclick="showView('benefits')" class="hover:text-brand-gold transition-colors">Nosotros</button>
+        <button onclick="showView('faq')" class="hover:text-brand-gold transition-colors">FAQ</button>
+      </nav>
+
+      <!-- Botón Menú Móvil -->
+      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-300 hover:text-white focus:outline-none">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Menú Desplegable Móvil -->
+    <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/10 px-4 py-4 space-y-3">
+      <button onclick="showView('home'); toggleMobileMenu();" class="block w-full text-left py-2 text-sm font-medium hover:text-brand-gold">Inicio</button>
+      <button onclick="showView('catalog'); toggleMobileMenu();" class="block w-full text-left py-2 text-sm font-medium hover:text-brand-gold">Catálogo</button>
+      <button onclick="showView('benefits'); toggleMobileMenu();" class="block w-full text-left py-2 text-sm font-medium hover:text-brand-gold">Nosotros</button>
+      <button onclick="showView('faq'); toggleMobileMenu();" class="block w-full text-left py-2 text-sm font-medium hover:text-brand-gold">FAQ</button>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="flex-grow">
+    
+    <!-- INICIO -->
+    <section id="view-home" class="py-8 sm:py-16 md:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="space-y-6 text-center md:text-left">
+            <span class="inline-block px-3 py-1 rounded-full bg-brand-gold/10 text-brand-gold text-xs font-semibold tracking-wider uppercase border border-brand-gold/20">
+              Colección Exclusiva 2026
+            </span>
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+              Elegancia & Tecnología <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-yellow-200">Sin Límites</span>
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base lg:text-lg leading-relaxed">
+              Plataforma oficial de comercio electrónico NEXO Store. Descubre nuestra selección de indumentaria urbana y tecnología con atención directa vía WhatsApp.
+            </p>
+            <div class="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
+              <button onclick="showView('catalog')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-brand-gold text-black font-bold hover:bg-yellow-400 transition-all shadow-lg shadow-brand-gold/20 flex items-center justify-center gap-2">
+                <span>Explorar Catálogo</span> <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+          <div class="relative px-4 sm:px-0">
+            <div class="w-full h-80 sm:h-96 rounded-2xl bg-gradient-to-tr from-slate-900 to-slate-800 border border-white/10 flex items-center justify-center p-6 relative overflow-hidden shadow-2xl">
+              <i class="fa-solid fa-gem text-8xl sm:text-9xl text-white/5 absolute"></i>
+              <div class="text-center space-y-4 z-10">
+                <div id="hero-logo-box" class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold text-2xl sm:text-3xl overflow-hidden shadow-lg">
+                  <i class="fa-solid fa-bag-shopping" id="hero-logo-icon"></i>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold text-white">NEXO Store Official</h3>
+                <p class="text-xs sm:text-sm text-slate-400 max-w-xs mx-auto">Calidad garantizada y atención inmediata.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATÁLOGO -->
+    <section id="view-catalog" class="py-8 sm:py-12 hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-white">Catálogo de Productos</h2>
+            <p class="text-slate-400 text-sm">Explora nuestra colección y realiza tus pedidos en segundos</p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input type="text" id="catalog-search" oninput="renderCatalog()" placeholder="Buscar producto..." class="bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-gold w-full sm:w-64">
+            <select id="catalog-category" onchange="renderCatalog()" class="bg-slate-900 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-gold">
+              <option value="ALL">Todas las Categorías</option>
+              <option value="Ropa">Ropa & Calzado</option>
+              <option value="Electrónica">Electrónica & Tech</option>
+              <option value="Accesorios">Accesorios</option>
+              <option value="Otros">Otros</option>
+            </select>
+          </div>
+        </div>
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"></div>
+      </div>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section id="view-benefits" class="py-8 sm:py-12 hidden">
+      <div class="max-w-4xl mx-auto px-4 space-y-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white text-center">¿Por qué comprar en NEXO Store?</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="glass p-6 rounded-2xl text-center space-y-3">
+            <i class="fa-solid fa-tags text-3xl text-brand-gold"></i>
+            <h3 class="font-bold text-white">Precios Competitivos</h3>
+            <p class="text-xs text-slate-400">Ofrecemos las mejores ofertas y costos accesibles en todos nuestros artículos.</p>
+          </div>
+          <div class="glass p-6 rounded-2xl text-center space-y-3">
+            <i class="fa-solid fa-bolt text-3xl text-brand-gold"></i>
+            <h3 class="font-bold text-white">Atención Inmediata</h3>
+            <p class="text-xs text-slate-400">Gestión directa de pedidos a través de WhatsApp corporativo.</p>
+          </div>
+          <div class="glass p-6 rounded-2xl text-center space-y-3">
+            <i class="fa-solid fa-truck-fast text-3xl text-brand-gold"></i>
+            <h3 class="font-bold text-white">Envíos Seguros</h3>
+            <p class="text-xs text-slate-400">Despachos coordinados de forma rápida y confiable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="view-faq" class="py-8 sm:py-12 hidden">
+      <div class="max-w-3xl mx-auto px-4 space-y-6">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white text-center">Preguntas Frecuentes</h2>
+        <div class="space-y-4">
+          <div class="glass p-5 rounded-xl space-y-2">
+            <h4 class="font-bold text-white text-sm">¿Cómo realizo un pedido?</h4>
+            <p class="text-xs text-slate-400">Haz clic en el botón «Pedir por WhatsApp» en cualquier producto del catálogo para comunicarte de inmediato con nosotros.</p>
+          </div>
+          <div class="glass p-5 rounded-xl space-y-2">
+            <h4 class="font-bold text-white text-sm">¿Cuáles son las formas de pago?</h4>
+            <p class="text-xs text-slate-400">Los métodos de pago se coordinan directamente al confirmar tu pedido con nuestro asesor por WhatsApp.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DETALLE -->
+  <div id="modal-product-detail" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="glass max-w-2xl w-full p-6 sm:p-8 rounded-2xl space-y-6 relative my-auto">
+      <button onclick="closeProductModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <div id="modal-product-content" class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER CON REDES SOCIALES CONFIGURABLES -->
+  <footer class="glass border-t border-white/10 mt-20 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 text-center">
+      <div class="flex justify-center items-center gap-6 text-xl">
+        <a id="footer-fb" href="#" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-gold hover:border-brand-gold transition-all">
+          <i class="fa-brands fa-facebook-f"></i>
+        </a>
+        <a id="footer-ig" href="#" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-gold hover:border-brand-gold transition-all">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a id="footer-tk" href="#" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-gold hover:border-brand-gold transition-all">
+          <i class="fa-brands fa-tiktok"></i>
+        </a>
+        <a id="footer-wa" href="#" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-gold hover:border-brand-gold transition-all">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+      </div>
+      <div class="text-xs text-slate-500 space-y-1">
+        <p>© 2026 NEXO Store. Todos los derechos reservados.</p>
+        <p class="text-slate-600">Comercio electrónico profesional en Bolivia.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT CLIENTE -->
+  <script>
+    let storeConfig = JSON.parse(localStorage.getItem('nexo_config')) || {
+      whatsappNum: "+59167066956",
+      whatsappUser: "@_ruben.1.7",
+      facebookUrl: "https://www.facebook.com/share/1LYUDx9ho2/",
+      instagramUrl: "https://www.instagram.com/nxxo_store?srtk=MW83Znk3bzF5b2IydA==",
+      tiktokUrl: "https://www.tiktok.com/@nexo.store11?_r=1&_t=ZS-9B5Jez6uSLk",
+      logoUrl: ""
+    };
+
+    function applyConfig() {
+      document.getElementById('footer-fb').href = storeConfig.facebookUrl;
+      document.getElementById('footer-ig').href = storeConfig.instagramUrl;
+      document.getElementById('footer-tk').href = storeConfig.tiktokUrl;
+      
+      const cleanWa = storeConfig.whatsappNum.replace(/[^0-9]/g, '');
+      document.getElementById('footer-wa').href = `https://wa.me/${cleanWa}`;
+
+      // Aplicar Logotipo Personalizado si existe
+      const logoContainer = document.getElementById('brand-logo-container');
+      const logoText = document.getElementById('brand-logo-text');
+      const heroLogoBox = document.getElementById('hero-logo-box');
+      
+      if(storeConfig.logoUrl && storeConfig.logoUrl.trim() !== "") {
+        logoContainer.innerHTML = `<img src="${storeConfig.logoUrl}" class="w-full h-full object-cover">`;
+        heroLogoBox.innerHTML = `<img src="${storeConfig.logoUrl}" class="w-full h-full object-cover">`;
+      } else {
+        logoContainer.innerHTML = `<span id="brand-logo-text">N</span>`;
+        heroLogoBox.innerHTML = `<i class="fa-solid fa-bag-shopping" id="hero-logo-icon"></i>`;
+      }
+    }
+
+    let products = JSON.parse(localStorage.getItem('nexo_products')) || [
+      {
+        id: '1',
+        title: 'Polera Oversize Black Urban',
+        price: 120,
+        oldPrice: 150,
+        category: 'Ropa',
+        img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500',
+        desc: 'Algodón 100% premium con corte relajado de alta durabilidad.'
+      },
+      {
+        id: '2',
+        title: 'Audífonos Bluetooth Pro',
+        price: 250,
+        oldPrice: 300,
+        category: 'Electrónica',
+        img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500',
+        desc: 'Cancelación de ruido activa con autonomía de 24 horas continuas.'
+      }
+    ];
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function showView(viewName) {
+      document.querySelectorAll('main > section').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(`view-${viewName}`);
+      if(target) target.classList.remove('hidden');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function renderCatalog() {
+      const grid = document.getElementById('products-grid');
+      if(!grid) return;
+      const search = document.getElementById('catalog-search').value.toLowerCase();
+      const cat = document.getElementById('catalog-category').value;
+
+      const filtered = products.filter(p => {
+        const matchesSearch = p.title.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
+        const matchesCat = cat === 'ALL' || p.category === cat;
+        return matchesSearch && matchesCat;
+      });
+
+      if(filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">No se encontraron productos disponibles.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => `
+        <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between">
+          <div class="relative overflow-hidden h-56 sm:h-64 bg-slate-900 cursor-pointer" onclick="openProductModal('${p.id}')">
+            <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+            ${p.oldPrice ? `<span class="absolute top-3 right-3 bg-red-500/95 text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Oferta</span>` : ''}
+          </div>
+          <div class="p-4 sm:p-5 space-y-3 flex-grow flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] uppercase font-semibold text-brand-gold tracking-widest">${p.category}</span>
+              <h3 class="text-sm sm:text-base font-bold text-white mt-0.5 leading-snug cursor-pointer hover:text-brand-gold transition-colors" onclick="openProductModal('${p.id}')">${p.title}</h3>
+              <p class="text-xs text-slate-400 line-clamp-2 mt-1">${p.desc}</p>
+            </div>
+            <div class="pt-3 border-t border-white/5 space-y-3">
+              <div class="flex items-baseline gap-2">
+                <span class="text-lg sm:text-xl font-extrabold text-white">${p.price} Bs</span>
+                ${p.oldPrice ? `<span class="text-xs text-slate-500 line-through">${p.oldPrice} Bs</span>` : ''}
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="openProductModal('${p.id}')" class="py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-semibold text-xs tracking-wider transition-all border border-white/10">
+                  Ver Detalles
+                </button>
+                <button onclick="orderWhatsApp('${p.title}', ${p.price})" class="py-2.5 rounded-xl bg-brand-gold/10 hover:bg-brand-gold text-brand-gold hover:text-black font-semibold text-xs tracking-wider transition-all border border-brand-gold/20 flex items-center justify-center gap-1">
+                  <i class="fa-brands fa-whatsapp text-sm"></i> <span>Pedir</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openProductModal(id) {
+      const p = products.find(item => item.id === id);
+      if(!p) return;
+      const modal = document.getElementById('modal-product-detail');
+      const content = document.getElementById('modal-product-content');
+
+      content.innerHTML = `
+        <div class="h-64 sm:h-96 rounded-xl overflow-hidden bg-slate-900">
+          <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover">
+        </div>
+        <div class="space-y-4">
+          <div>
+            <span class="text-xs uppercase font-semibold text-brand-gold tracking-widest">${p.category}</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">${p.title}</h3>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">${p.desc}</p>
+          </div>
+          <div class="flex items-baseline gap-3 pt-2 border-t border-white/10">
+            <span class="text-2xl font-extrabold text-white" id="modal-unit-price" data-price="${p.price}">${p.price} Bs</span>
+            ${p.oldPrice ? `<span class="text-sm text-slate-500 line-through">${p.oldPrice} Bs</span>` : ''}
+          </div>
+          <div class="flex items-center gap-3">
+            <label class="text-xs text-slate-400">Cantidad:</label>
+            <div class="flex items-center border border-white/10 rounded-lg bg-white/5">
+              <button onclick="adjustQty(-1)" class="px-3 py-1 text-slate-300 hover:text-white">-</button>
+              <span id="modal-qty" class="px-3 py-1 text-sm font-bold text-white">1</span>
+              <button onclick="adjustQty(1)" class="px-3 py-1 text-slate-300 hover:text-white">+</button>
+            </div>
+          </div>
+          <div class="pt-2">
+            <p class="text-xs text-slate-400 mb-1">Total Calculado: <span class="text-white font-bold text-sm" id="modal-total-price">${p.price} Bs</span></p>
+          </div>
+          <button onclick="orderWhatsAppQuantity('${p.title}')" class="w-full py-3 rounded-xl bg-brand-gold text-black font-bold text-xs tracking-wider transition-all hover:bg-yellow-400 flex items-center justify-center gap-2 shadow-lg shadow-brand-gold/20">
+            <i class="fa-brands fa-whatsapp text-base"></i> <span>PEDIR POR WHATSAPP</span>
+          </button>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    function closeProductModal() {
+      document.getElementById('modal-product-detail').classList.add('hidden');
+    }
+
+    function adjustQty(change) {
+      const qtyEl = document.getElementById('modal-qty');
+      const priceEl = document.getElementById('modal-unit-price');
+      const totalEl = document.getElementById('modal-total-price');
+      if(!qtyEl) return;
+      let current = parseInt(qtyEl.innerText) + change;
+      if(current < 1) current = 1;
+      qtyEl.innerText = current;
+      const unitPrice = parseFloat(priceEl.dataset.price);
+      totalEl.innerText = `${(unitPrice * current).toFixed(1)} Bs`;
+    }
+
+    function orderWhatsAppQuantity(title) {
+      const qty = document.getElementById('modal-qty').innerText;
+      const total = document.getElementById('modal-total-price').innerText;
+      const cleanWa = storeConfig.whatsappNum.replace(/[^0-9]/g, '');
+      const msg = `¡Hola! 👋 Me comunico con NEXO Store.\n\nEstoy interesado/a en adquirir el siguiente producto:\n\n🛍️ Producto: ${title}\n📦 Cantidad: ${qty}\n💰 Total Estimado: ${total}\n\nMe gustaría recibir más información sobre este artículo y conocer cómo puedo realizar mi pedido.\n\n¡Muchas gracias!`;
+      const url = `https://wa.me/${cleanWa}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    function orderWhatsApp(title, price) {
+      const cleanWa = storeConfig.whatsappNum.replace(/[^0-9]/g, '');
+      const msg = `¡Hola! 👋 Me comunico con NEXO Store.\n\nEstoy interesado/a en adquirir el siguiente producto:\n\n🛍️ Producto: ${title}\n💰 Precio: ${price} Bs\n📦 Disponibilidad: Disponible\n\nMe gustaría recibir más información sobre este artículo y conocer cómo puedo realizar mi pedido.\n\n¡Muchas gracias!`;
+      const url = `https://wa.me/${cleanWa}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      applyConfig();
+      renderCatalog();
+    });
+  </script>
+</body>
+</html>
