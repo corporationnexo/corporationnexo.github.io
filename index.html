@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEXO Store - Tienda Virtual</title>
+  <title>NEXO Store - Tienda Oficial</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -15,7 +15,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; background-color: #0b0c10; color: #e2e8f0; }
-    .glass { background: rgba(18, 21, 30, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass { background: rgba(18, 21, 30, 0.90); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
     .glass-card { background: rgba(22, 27, 38, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
     .glass-card:hover { border-color: rgba(212, 175, 55, 0.3); transform: translateY(-2px); }
     ::-webkit-scrollbar { width: 6px; }
@@ -25,83 +25,40 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-gold selection:text-black">
 
-  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none px-4 sm:px-0"></div>
+  <div id="toast" class="hidden fixed bottom-5 right-5 z-50 p-4 rounded-xl text-xs font-bold bg-brand-gold text-black shadow-lg"></div>
 
   <header class="sticky top-0 z-40 glass border-b border-white/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <a href="#" onclick="showView('home')" class="flex items-center gap-3 group">
-        <div id="brand-logo-container" class="w-10 h-10 rounded-lg bg-gradient-to-tr from-brand-gold to-yellow-200 flex items-center justify-center text-black font-bold text-xl shadow-lg shadow-brand-gold/10 group-hover:scale-105 transition-transform overflow-hidden">
-          <span id="brand-logo-text">N</span>
+      <a href="#" onclick="switchView('store')" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-brand-gold to-yellow-200 flex items-center justify-center text-black font-bold text-xl shadow-lg">
+          <span>N</span>
         </div>
         <div>
           <span class="text-xl font-extrabold tracking-wider text-white block leading-none">NEXO</span>
           <span class="text-xs text-brand-gold font-medium tracking-widest uppercase">Store</span>
         </div>
       </a>
-
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
-        <button onclick="showView('home')" class="hover:text-brand-gold transition-colors">Inicio</button>
-        <button onclick="showView('catalog')" class="hover:text-brand-gold transition-colors">Catálogo</button>
-        <button onclick="showView('benefits')" class="hover:text-brand-gold transition-colors">Nosotros</button>
-        <button onclick="showView('faq')" class="hover:text-brand-gold transition-colors">FAQ</button>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <button onclick="switchView('store')" class="hover:text-brand-gold transition-colors">Catálogo</button>
+        <button onclick="switchView('benefits')" class="hover:text-brand-gold transition-colors">Nosotros</button>
+        <button onclick="switchView('faq')" class="hover:text-brand-gold transition-colors">FAQ</button>
       </nav>
-
-      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-300 hover:text-white focus:outline-none">
-        <i class="fa-solid fa-bars text-xl"></i>
-      </button>
-    </div>
-
-    <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/10 px-4 py-4 space-y-3">
-      <button onclick="showView('home'); toggleMobileMenu();" class="block w-full text-left py-2 text-sm font-medium hover:text-brand-gold">Inicio</button>
-      <button onclick="showView('catalog'); toggleMobileMenu();" class="block w-full text-left py-2 text-sm font-medium hover:text-brand-gold">Catálogo</button>
-      <button onclick="showView('benefits'); toggleMobileMenu();" class="block w-full text-left py-2 text-sm font-medium hover:text-brand-gold">Nosotros</button>
-      <button onclick="showView('faq'); toggleMobileMenu();" class="block w-full text-left py-2 text-sm font-medium hover:text-brand-gold">FAQ</button>
     </div>
   </header>
 
   <main class="flex-grow">
-    <!-- INICIO -->
-    <section id="view-home" class="py-8 sm:py-16 md:py-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-          <div class="space-y-6 text-center md:text-left">
-            <span class="inline-block px-3 py-1 rounded-full bg-brand-gold/10 text-brand-gold text-xs font-semibold tracking-wider uppercase border border-brand-gold/20">Colección Exclusiva 2026</span>
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
-              Elegancia & Tecnología <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-yellow-200">Sin Límites</span>
-            </h1>
-            <p class="text-slate-400 text-sm sm:text-base lg:text-lg leading-relaxed">
-              Plataforma oficial de comercio electrónico NEXO Store. Descubre nuestra selección con atención directa vía WhatsApp.
-            </p>
-            <div class="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
-              <button onclick="showView('catalog')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-brand-gold text-black font-bold hover:bg-yellow-400 transition-all shadow-lg shadow-brand-gold/20 flex items-center justify-center gap-2">
-                <span>Explorar Catálogo</span> <i class="fa-solid fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-          <div class="relative px-4 sm:px-0">
-            <div class="w-full h-80 sm:h-96 rounded-2xl bg-gradient-to-tr from-slate-900 to-slate-800 border border-white/10 flex items-center justify-center p-6 relative overflow-hidden shadow-2xl">
-              <i class="fa-solid fa-gem text-8xl sm:text-9xl text-white/5 absolute"></i>
-              <div class="text-center space-y-4 z-10">
-                <div id="hero-logo-box" class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold text-2xl sm:text-3xl overflow-hidden shadow-lg">
-                  <i class="fa-solid fa-bag-shopping" id="hero-logo-icon"></i>
-                </div>
-                <h3 class="text-xl sm:text-2xl font-bold text-white">NEXO Store Official</h3>
-                <p class="text-xs sm:text-sm text-slate-400 max-w-xs mx-auto">Calidad garantizada y atención inmediata.</p>
-              </div>
-            </div>
-          </div>
+    
+    <section id="view-store" class="py-8 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div class="glass p-8 sm:p-12 rounded-3xl text-center space-y-4 relative overflow-hidden">
+          <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-gold/10 rounded-full blur-3xl"></div>
+          <span class="inline-block px-3 py-1 rounded-full bg-brand-gold/10 text-brand-gold text-xs font-semibold tracking-wider uppercase border border-brand-gold/20">Colección Exclusiva</span>
+          <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">Elegancia & Tecnología Sin Límites</h1>
+          <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Explora nuestra tienda oficial y realiza tus pedidos de forma directa e inmediata a través de nuestro WhatsApp corporativo.</p>
         </div>
-      </div>
-    </section>
 
-    <!-- CATÁLOGO -->
-    <section id="view-catalog" class="py-8 sm:py-12 hidden">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
-          <div>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white">Catálogo de Productos</h2>
-            <p class="text-slate-400 text-sm">Explora nuestra colección y realiza tus pedidos en segundos</p>
-          </div>
+        <div class="flex flex-col md:flex-row justify-between gap-4 border-b border-white/10 pb-6">
+          <h2 class="text-2xl font-bold text-white">Productos Disponibles</h2>
           <div class="flex flex-col sm:flex-row gap-3">
             <input type="text" id="catalog-search" oninput="renderCatalog()" placeholder="Buscar producto..." class="bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-gold w-full sm:w-64">
             <select id="catalog-category" onchange="renderCatalog()" class="bg-slate-900 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-gold">
@@ -113,60 +70,142 @@
             </select>
           </div>
         </div>
-        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"></div>
-      </div>
-    </section>
 
-    <!-- NOSOTROS -->
-    <section id="view-benefits" class="py-8 sm:py-12 hidden">
-      <div class="max-w-4xl mx-auto px-4 space-y-8">
-        <h2 class="text-2xl sm:text-3xl font-bold text-white text-center">¿Por qué comprar en NEXO Store?</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div class="glass p-6 rounded-2xl text-center space-y-3"><i class="fa-solid fa-tags text-3xl text-brand-gold"></i><h3 class="font-bold text-white">Precios Competitivos</h3><p class="text-xs text-slate-400">Las mejores ofertas accesibles.</p></div>
-          <div class="glass p-6 rounded-2xl text-center space-y-3"><i class="fa-solid fa-bolt text-3xl text-brand-gold"></i><h3 class="font-bold text-white">Atención Inmediata</h3><p class="text-xs text-slate-400">Pedidos vía WhatsApp corporativo.</p></div>
-          <div class="glass p-6 rounded-2xl text-center space-y-3"><i class="fa-solid fa-truck-fast text-3xl text-brand-gold"></i><h3 class="font-bold text-white">Envíos Seguros</h3><p class="text-xs text-slate-400">Despachos rápidos y confiables.</p></div>
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <p class="text-xs text-slate-500 col-span-full text-center py-12">Cargando productos de la nube...</p>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section id="view-faq" class="py-8 sm:py-12 hidden">
-      <div class="max-w-3xl mx-auto px-4 space-y-6">
-        <h2 class="text-2xl sm:text-3xl font-bold text-white text-center">Preguntas Frecuentes</h2>
-        <div class="space-y-4">
-          <div class="glass p-5 rounded-xl space-y-2"><h4 class="font-bold text-white text-sm">¿Cómo realizo un pedido?</h4><p class="text-xs text-slate-400">Haz clic en el botón «Pedir por WhatsApp» en cualquier producto.</p></div>
-          <div class="glass p-5 rounded-xl space-y-2"><h4 class="font-bold text-white text-sm">¿Cuáles son las formas de pago?</h4><p class="text-xs text-slate-400">Se coordinan al confirmar tu pedido por WhatsApp.</p></div>
+    <section id="view-benefits" class="py-12 hidden">
+      <div class="max-w-3xl mx-auto px-4 text-center space-y-4">
+        <h2 class="text-2xl font-bold text-white">¿Por qué comprar en NEXO Store?</h2>
+        <p class="text-slate-400 text-sm leading-relaxed">Garantizamos calidad superior, precios competitivos y una atención rápida mediante canales directos de mensajería.</p>
+      </div>
+    </section>
+
+    <section id="view-faq" class="py-12 hidden">
+      <div class="max-w-3xl mx-auto px-4 text-center space-y-4">
+        <h2 class="text-2xl font-bold text-white">Preguntas Frecuentes</h2>
+        <p class="text-slate-400 text-sm leading-relaxed">Los métodos de pago y detalles de entrega se coordinan de forma personalizada al hacer clic en el botón de pedido de cada artículo.</p>
+      </div>
+    </section>
+
+    <section id="view-admin" class="py-8 hidden">
+      <div class="max-w-7xl mx-auto px-4 space-y-8">
+        <div class="flex justify-between items-center border-b border-white/10 pb-4">
+          <div>
+            <h2 class="text-2xl font-bold text-brand-gold">Panel de Administración Privado</h2>
+            <p class="text-xs text-slate-400">Gestión exclusiva de inventario en la nube.</p>
+          </div>
+          <button onclick="switchView('store')" class="px-4 py-2 bg-white/10 text-white rounded-lg text-xs font-bold hover:bg-white/20">Cerrar Panel</button>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+          <div class="glass p-6 rounded-2xl space-y-4 h-fit">
+            <h3 class="text-lg font-bold text-white border-b border-white/10 pb-3" id="form-title">Publicar Producto</h3>
+            <form id="product-form" onsubmit="requestAction('save', event)" class="space-y-4">
+              <input type="hidden" id="prod-id">
+              <div>
+                <label class="block text-xs text-slate-400 mb-1">Título del Producto</label>
+                <input type="text" id="prod-title" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none">
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs text-slate-400 mb-1">Precio (Bs)</label>
+                  <input type="number" step="0.5" id="prod-price" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs text-slate-400 mb-1">Categoría</label>
+                  <select id="prod-category" class="w-full bg-slate-900 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none">
+                    <option value="Ropa">Ropa</option>
+                    <option value="Electrónica">Electrónica</option>
+                    <option value="Accesorios">Accesorios</option>
+                    <option value="Otros">Otros</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs text-slate-400 mb-1">URL de la Imagen</label>
+                <input type="url" id="prod-img" required placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-400 mb-1">Descripción</label>
+                <textarea id="prod-desc" rows="3" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none"></textarea>
+              </div>
+              <div class="flex gap-2">
+                <button type="submit" id="btn-save" class="w-full py-3 bg-brand-gold text-black font-bold rounded-lg hover:bg-yellow-400 transition-all text-xs uppercase tracking-wider">Guardar Producto</button>
+                <button type="button" id="btn-cancel" onclick="resetForm()" class="hidden px-4 py-3 bg-white/5 text-slate-300 rounded-lg text-xs">Cancelar</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="lg:col-span-2 glass p-6 rounded-2xl space-y-4">
+            <h3 class="text-lg font-bold text-white border-b border-white/10 pb-3">Inventario Actual en la Nube</h3>
+            <div id="admin-products-list" class="space-y-3">Cargando inventario...</div>
+          </div>
         </div>
       </div>
     </section>
+
   </main>
 
-  <!-- MODAL -->
-  <div id="modal-product-detail" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
-    <div class="glass max-w-2xl w-full p-6 sm:p-8 rounded-2xl space-y-6 relative my-auto">
-      <button onclick="closeProductModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
-      <div id="modal-product-content" class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center"></div>
+  <div id="modal-product" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="glass max-w-xl w-full p-6 rounded-2xl space-y-4 relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <div id="modal-content" class="grid sm:grid-cols-2 gap-4 items-center"></div>
     </div>
   </div>
 
-  <footer class="glass border-t border-white/10 mt-20 py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 text-center">
-      <div class="flex justify-center items-center gap-6 text-xl">
-        <a id="footer-fb" href="#" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-gold transition-all"><i class="fa-brands fa-facebook-f"></i></a>
-        <a id="footer-ig" href="#" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-gold transition-all"><i class="fa-brands fa-instagram"></i></a>
-        <a id="footer-tk" href="#" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-gold transition-all"><i class="fa-brands fa-tiktok"></i></a>
-        <a id="footer-wa" href="#" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-gold transition-all"><i class="fa-brands fa-whatsapp"></i></a>
+  <div id="modal-auth" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass max-w-md w-full p-6 sm:p-8 rounded-2xl space-y-6 relative border border-brand-gold/30">
+      <div class="text-center space-y-2">
+        <div class="w-12 h-12 bg-brand-gold/10 text-brand-gold rounded-full flex items-center justify-center mx-auto text-xl border border-brand-gold/30">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white">Acceso Restringido (Capa 1)</h3>
+        <p class="text-xs text-slate-400">Ingresa la clave de acceso al panel.</p>
       </div>
-      <div class="text-xs text-slate-500 space-y-1">
-        <p>© 2026 NEXO Store. Todos los derechos reservados.</p>
+      <form onsubmit="verifyLayer1(event)" class="space-y-4">
+        <input type="password" id="pass-layer1" required placeholder="Contraseña..." class="w-full bg-black/50 border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-gold text-center tracking-widest">
+        <div class="flex gap-2">
+          <button type="submit" class="w-full py-3 bg-brand-gold text-black font-bold rounded-xl text-xs uppercase tracking-wider hover:bg-yellow-400">Desbloquear</button>
+          <button type="button" onclick="closeAuthModal()" class="px-4 py-3 bg-white/5 text-slate-300 rounded-xl text-xs hover:bg-white/10">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-layer2" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass max-w-md w-full p-6 sm:p-8 rounded-2xl space-y-6 relative border border-brand-gold/30">
+      <div class="text-center space-y-2">
+        <div class="w-12 h-12 bg-yellow-500/10 text-yellow-500 rounded-full flex items-center justify-center mx-auto text-xl border border-yellow-500/30">
+          <i class="fa-solid fa-shield-cat"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white">Confirmación Requerida (Capa 2)</h3>
+        <p class="text-xs text-slate-400">Ingresa la clave de autorización para guardar, editar o eliminar.</p>
       </div>
+      <form onsubmit="confirmLayer2(event)" class="space-y-4">
+        <input type="password" id="pass-layer2" required placeholder="Contraseña de cambios..." class="w-full bg-black/50 border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-gold text-center tracking-widest">
+        <div class="flex gap-2">
+          <button type="submit" class="w-full py-3 bg-brand-gold text-black font-bold rounded-xl text-xs uppercase tracking-wider hover:bg-yellow-400">Autorizar Acción</button>
+          <button type="button" onclick="closeLayer2Modal()" class="px-4 py-3 bg-white/5 text-slate-300 rounded-xl text-xs hover:bg-white/10">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="glass border-t border-white/10 mt-20 py-8">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <p>© 2026 NEXO Store. Todos los derechos reservados.</p>
+      <button onclick="openAuthModal()" class="text-slate-600 hover:text-slate-400 transition-colors flex items-center gap-1.5 p-2">
+        <i class="fa-solid fa-shield-halved text-[10px]"></i> <span>Admin Secure</span>
+      </button>
     </div>
   </footer>
-
-  <!-- FIREBASE SCRIPTS -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA1tz7MlQtm1VHMNVMZ8q9Io_LcJXSegSU",
@@ -174,164 +213,268 @@
       projectId: "nexo-store-61557",
       storageBucket: "nexo-store-61557.firebasestorage.app",
       messagingSenderId: "124759290340",
-      appId: "1:124759290340:web:954c00e821e80c6aead7f1"
+      appId: "1:124759290340:web:954c00e821e80c6aead7f1",
+      measurementId: "G-FXWS2H5DSK"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    let storeConfig = {
-      whatsappNum: "+59167066956",
-      facebookUrl: "https://www.facebook.com/share/1LYUDx9ho2/",
-      instagramUrl: "https://www.instagram.com/nxxo_store?srtk=MW83Znk3bzF5b2IydA==",
-      tiktokUrl: "https://www.tiktok.com/@nexo.store11?_r=1&_t=ZS-9B5Jez6uSLk",
-      logoUrl: ""
-    };
+    const db = getFirestore(initializeApp(firebaseConfig));
     let products = [];
+    const whatsappNum = "59167066956";
 
-    async function fetchStoreData() {
+    const hashLayer1 = "8e9c303f2ffb016335418b76e19198305c488344e1d16ddb732d84784a923d8c";
+    const hashLayer2 = "47690f4886617a7e12e1281fa940e531818222b406e40995ac1f7aa027a42142";
+
+    let pendingAction = null;
+    let pendingData = null;
+
+    window.showToast = function(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), 3000);
+    }
+
+    async function fetchProducts() {
       try {
-        const configDoc = await getDoc(doc(db, "settings", "storeConfig"));
-        if (configDoc.exists()) {
-          storeConfig = { ...storeConfig, ...configDoc.data() };
-        }
-
-        const querySnapshot = await getDocs(collection(db, "products"));
+        const snap = await getDocs(collection(db, "products"));
         products = [];
-        querySnapshot.forEach((docSnap) => {
-          products.push({ id: docSnap.id, ...docSnap.data() });
-        });
-
-        applyConfigToStore();
+        snap.forEach(d => products.push({ id: d.id, ...d.data() }));
         renderCatalog();
-      } catch (error) {
-        console.error("Error cargando de la nube:", error);
+        renderAdminProducts();
+      } catch(e) {
+        console.error(e);
       }
     }
 
-    function applyConfigToStore() {
-      document.getElementById('footer-fb').href = storeConfig.facebookUrl || "#";
-      document.getElementById('footer-ig').href = storeConfig.instagramUrl || "#";
-      document.getElementById('footer-tk').href = storeConfig.tiktokUrl || "#";
-      
-      const cleanWa = (storeConfig.whatsappNum || "+59167066956").replace(/[^0-9]/g, '');
-      document.getElementById('footer-wa').href = `https://wa.me/${cleanWa}`;
-
-      const logoContainer = document.getElementById('brand-logo-container');
-      const heroLogoBox = document.getElementById('hero-logo-box');
-      
-      if(storeConfig.logoUrl && storeConfig.logoUrl.trim() !== "") {
-        logoContainer.innerHTML = `<img src="${storeConfig.logoUrl}" class="w-full h-full object-cover">`;
-        heroLogoBox.innerHTML = `<img src="${storeConfig.logoUrl}" class="w-full h-full object-cover">`;
-      } else {
-        logoContainer.innerHTML = `<span id="brand-logo-text">N</span>`;
-        heroLogoBox.innerHTML = `<i class="fa-solid fa-bag-shopping" id="hero-logo-icon"></i>`;
-      }
-    }
-
-    window.toggleMobileMenu = function() {
-      document.getElementById('mobile-menu').classList.toggle('hidden');
-    }
-
-    window.showView = function(viewName) {
-      document.querySelectorAll('main > section').forEach(el => el.classList.add('hidden'));
-      const target = document.getElementById(`view-${viewName}`);
-      if(target) target.classList.remove('hidden');
-      window.scrollTo({top: 0, behavior: 'smooth'});
+    window.switchView = function(view) {
+      ['store', 'benefits', 'faq', 'admin'].forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if(el) el.classList.add('hidden');
+      });
+      document.getElementById(`view-${view}`).classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     window.renderCatalog = function() {
       const grid = document.getElementById('products-grid');
-      if(!grid) return;
       const search = document.getElementById('catalog-search').value.toLowerCase();
       const cat = document.getElementById('catalog-category').value;
 
       const filtered = products.filter(p => {
-        const matchesSearch = p.title.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
-        const matchesCat = cat === 'ALL' || p.category === cat;
-        return matchesSearch && matchesCat;
+        const matchSearch = p.title.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
+        const matchCat = cat === 'ALL' || p.category === cat;
+        return matchSearch && matchCat;
       });
 
       if(filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">No hay productos disponibles.</div>`;
+        grid.innerHTML = "<p class='text-xs text-slate-500 col-span-full text-center py-12'>No hay productos disponibles.</p>";
         return;
       }
 
       grid.innerHTML = filtered.map(p => `
-        <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between">
-          <div class="relative overflow-hidden h-56 sm:h-64 bg-slate-900 cursor-pointer" onclick="openProductModal('${p.id}')">
-            <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            ${p.oldPrice ? `<span class="absolute top-3 right-3 bg-red-500/95 text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Oferta</span>` : ''}
+        <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between p-4 space-y-3">
+          <div class="h-48 bg-slate-900 rounded-xl overflow-hidden cursor-pointer" onclick="openModal('${p.id}')">
+            <img src="${p.img}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
           </div>
-          <div class="p-4 sm:p-5 space-y-3 flex-grow flex flex-col justify-between">
-            <div>
-              <span class="text-[10px] uppercase font-semibold text-brand-gold tracking-widest">${p.category}</span>
-              <h3 class="text-sm sm:text-base font-bold text-white mt-0.5 leading-snug cursor-pointer hover:text-brand-gold" onclick="openProductModal('${p.id}')">${p.title}</h3>
-              <p class="text-xs text-slate-400 line-clamp-2 mt-1">${p.desc}</p>
-            </div>
-            <div class="pt-3 border-t border-white/5 space-y-3">
-              <div class="flex items-baseline gap-2">
-                <span class="text-lg sm:text-xl font-extrabold text-white">${p.price} Bs</span>
-                ${p.oldPrice ? `<span class="text-xs text-slate-500 line-through">${p.oldPrice} Bs</span>` : ''}
-              </div>
-              <div class="grid grid-cols-2 gap-2">
-                <button onclick="openProductModal('${p.id}')" class="py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-semibold text-xs transition-all border border-white/10">Ver Detalles</button>
-                <button onclick="orderWhatsApp('${p.title}', ${p.price})" class="py-2.5 rounded-xl bg-brand-gold/10 hover:bg-brand-gold text-brand-gold hover:text-black font-semibold text-xs transition-all border border-brand-gold/20 flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp text-sm"></i> <span>Pedir</span></button>
-              </div>
-            </div>
+          <div class="space-y-1">
+            <span class="text-[10px] uppercase font-bold text-brand-gold">${p.category}</span>
+            <h3 class="font-bold text-white text-sm cursor-pointer hover:text-brand-gold" onclick="openModal('${p.id}')">${p.title}</h3>
+            <p class="text-xs text-slate-400 line-clamp-2">${p.desc}</p>
+          </div>
+          <div class="pt-2 border-t border-white/5 flex items-center justify-between">
+            <span class="font-extrabold text-white">${p.price} Bs</span>
+            <button onclick="orderWhatsApp('${p.title}', ${p.price})" class="px-3 py-2 bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-black rounded-xl text-xs font-bold transition-all flex items-center gap-1"><i class="fa-brands fa-whatsapp"></i> Pedir</button>
           </div>
         </div>
       `).join('');
     }
 
-    window.openProductModal = function(id) {
+    window.openModal = function(id) {
       const p = products.find(item => item.id === id);
       if(!p) return;
-      const modal = document.getElementById('modal-product-detail');
-      const content = document.getElementById('modal-product-content');
-
-      content.innerHTML = `
-        <div class="h-64 sm:h-96 rounded-xl overflow-hidden bg-slate-900"><img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover"></div>
-        <div class="space-y-4">
-          <div><span class="text-xs uppercase font-semibold text-brand-gold tracking-widest">${p.category}</span><h3 class="text-xl sm:text-2xl font-bold text-white mt-1">${p.title}</h3><p class="text-xs text-slate-400 mt-2 leading-relaxed">${p.desc}</p></div>
-          <div class="flex items-baseline gap-3 pt-2 border-t border-white/10"><span class="text-2xl font-extrabold text-white" id="modal-unit-price" data-price="${p.price}">${p.price} Bs</span>${p.oldPrice ? `<span class="text-sm text-slate-500 line-through">${p.oldPrice} Bs</span>` : ''}</div>
-          <div class="flex items-center gap-3"><label class="text-xs text-slate-400">Cantidad:</label><div class="flex items-center border border-white/10 rounded-lg bg-white/5"><button onclick="adjustQty(-1)" class="px-3 py-1 text-slate-300">-</button><span id="modal-qty" class="px-3 py-1 text-sm font-bold text-white">1</span><button onclick="adjustQty(1)" class="px-3 py-1 text-slate-300">+</button></div></div>
-          <div class="pt-2"><p class="text-xs text-slate-400 mb-1">Total Calculado: <span class="text-white font-bold text-sm" id="modal-total-price">${p.price} Bs</span></p></div>
-          <button onclick="orderWhatsAppQuantity('${p.title}')" class="w-full py-3 rounded-xl bg-brand-gold text-black font-bold text-xs tracking-wider transition-all hover:bg-yellow-400 flex items-center justify-center gap-2 shadow-lg shadow-brand-gold/20"><i class="fa-brands fa-whatsapp text-base"></i> <span>PEDIR POR WHATSAPP</span></button>
+      document.getElementById('modal-content').innerHTML = `
+        <img src="${p.img}" class="w-full h-48 sm:h-64 object-cover rounded-xl bg-slate-900">
+        <div class="space-y-3">
+          <span class="text-[10px] uppercase font-bold text-brand-gold">${p.category}</span>
+          <h3 class="font-bold text-white text-lg">${p.title}</h3>
+          <p class="text-xs text-slate-400">${p.desc}</p>
+          <div class="flex items-center gap-3">
+            <label class="text-xs text-slate-400">Cantidad:</label>
+            <div class="flex items-center border border-white/10 rounded-lg bg-white/5">
+              <button onclick="adjustQty(-1)" class="px-3 py-1 text-slate-300">-</button>
+              <span id="modal-qty" class="px-3 py-1 text-sm font-bold text-white">1</span>
+              <button onclick="adjustQty(1)" class="px-3 py-1 text-slate-300">+</button>
+            </div>
+          </div>
+          <p class="font-extrabold text-white text-base">Total: <span id="modal-total-price" data-unit="${p.price}">${p.price}</span> Bs</p>
+          <button onclick="orderWhatsAppQuantity('${p.title}')" class="w-full py-3 bg-brand-gold text-black font-bold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2"><i class="fa-brands fa-whatsapp text-base"></i> Pedir por WhatsApp</button>
         </div>
       `;
-      modal.classList.remove('hidden');
+      document.getElementById('modal-product').classList.remove('hidden');
     }
 
-    window.closeProductModal = function() { document.getElementById('modal-product-detail').classList.add('hidden'); }
+    window.closeModal = function() { document.getElementById('modal-product').classList.add('hidden'); }
 
     window.adjustQty = function(change) {
       const qtyEl = document.getElementById('modal-qty');
-      const priceEl = document.getElementById('modal-unit-price');
       const totalEl = document.getElementById('modal-total-price');
       if(!qtyEl) return;
       let current = parseInt(qtyEl.innerText) + change;
       if(current < 1) current = 1;
       qtyEl.innerText = current;
-      const unitPrice = parseFloat(priceEl.dataset.price);
-      totalEl.innerText = `${(unitPrice * current).toFixed(1)} Bs`;
+      const unit = parseFloat(totalEl.dataset.unit);
+      totalEl.innerText = (unit * current).toFixed(1);
+    }
+
+    window.orderWhatsApp = function(title, price) {
+      const msg = encodeURIComponent(`¡Hola! 👋 Me interesa este producto:\n🛍️ *${title}*\n💰 Precio: *${price} Bs*`);
+      window.open(`https://wa.me/${whatsappNum}?text=${msg}`, '_blank');
     }
 
     window.orderWhatsAppQuantity = function(title) {
       const qty = document.getElementById('modal-qty').innerText;
       const total = document.getElementById('modal-total-price').innerText;
-      const cleanWa = storeConfig.whatsappNum.replace(/[^0-9]/g, '');
-      const msg = `¡Hola! 👋 Me comunico con NEXO Store.\n\nEstoy interesado en:\n🛍️ Producto: ${title}\n📦 Cantidad: ${qty}\n💰 Total: ${total}`;
-      window.open(`https://wa.me/${cleanWa}?text=${encodeURIComponent(msg)}`, '_blank');
+      const msg = encodeURIComponent(`¡Hola! 👋 Me interesa:\n🛍️ Producto: *${title}*\n📦 Cantidad: *${qty}*\n💰 Total: *${total} Bs*`);
+      window.open(`https://wa.me/${whatsappNum}?text=${msg}`, '_blank');
     }
 
-    window.orderWhatsApp = function(title, price) {
-      const cleanWa = storeConfig.whatsappNum.replace(/[^0-9]/g, '');
-      const msg = `¡Hola! 👋 Me comunico con NEXO Store.\n\nEstoy interesado en:\n🛍️ Producto: ${title}\n💰 Precio: ${price} Bs`;
-      window.open(`https://wa.me/${cleanWa}?text=${encodeURIComponent(msg)}`, '_blank');
+    window.openAuthModal = function() { document.getElementById('modal-auth').classList.remove('hidden'); }
+    window.closeAuthModal = function() { 
+      document.getElementById('modal-auth').classList.add('hidden');
+      document.getElementById('pass-layer1').value = '';
     }
 
-    window.addEventListener('DOMContentLoaded', fetchStoreData);
+    async function hashString(str) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    window.verifyLayer1 = async function(e) {
+      e.preventDefault();
+      const inputVal = document.getElementById('pass-layer1').value;
+      const hashedInput = await hashString(inputVal);
+      if(hashedInput === hashLayer1) {
+        closeAuthModal();
+        switchView('admin');
+        showToast("¡Acceso concedido al panel!");
+      } else {
+        showToast("Contraseña incorrecta (Capa 1)");
+        document.getElementById('pass-layer1').value = '';
+      }
+    }
+
+    window.openLayer2Modal = function(action, data) {
+      pendingAction = action;
+      pendingData = data;
+      document.getElementById('modal-layer2').classList.remove('hidden');
+    }
+    window.closeLayer2Modal = function() {
+      document.getElementById('modal-layer2').classList.add('hidden');
+      document.getElementById('pass-layer2').value = '';
+      pendingAction = null;
+      pendingData = null;
+    }
+
+    window.confirmLayer2 = async function(e) {
+      e.preventDefault();
+      const inputVal = document.getElementById('pass-layer2').value;
+      const hashedInput = await hashString(inputVal);
+      if(hashedInput === hashLayer2) {
+        closeLayer2Modal();
+        executeAuthorizedAction(pendingAction, pendingData);
+      } else {
+        showToast("Contraseña incorrecta (Capa 2)");
+        document.getElementById('pass-layer2').value = '';
+      }
+    }
+
+    function renderAdminProducts() {
+      const list = document.getElementById('admin-products-list');
+      if(!list) return;
+      if(products.length === 0) {
+        list.innerHTML = "<p class='text-xs text-slate-500'>No hay productos registrados.</p>";
+        return;
+      }
+      list.innerHTML = products.map(p => `
+        <div class="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5 gap-3">
+          <div class="flex items-center gap-3 overflow-hidden">
+            <img src="${p.img}" class="w-12 h-12 object-cover rounded-lg flex-shrink-0 bg-slate-900">
+            <div class="truncate">
+              <h4 class="text-sm font-bold text-white truncate">${p.title}</h4>
+              <p class="text-xs text-slate-400">${p.price} Bs - <span class="text-brand-gold font-semibold">${p.category}</span></p>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 flex-shrink-0">
+            <button onclick="editProduct('${p.id}')" class="p-2 text-slate-400 hover:text-white"><i class="fa-solid fa-pen"></i></button>
+            <button onclick="deleteProduct('${p.id}')" class="p-2 text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    window.requestAction = function(type, e) {
+      e.preventDefault();
+      const id = document.getElementById('prod-id').value;
+      const data = {
+        title: document.getElementById('prod-title').value.trim(),
+        price: parseFloat(document.getElementById('prod-price').value),
+        category: document.getElementById('prod-category').value,
+        img: document.getElementById('prod-img').value.trim(),
+        desc: document.getElementById('prod-desc').value.trim()
+      };
+      openLayer2Modal({ type: id ? 'update' : 'add', id, data }, null);
+    }
+
+    window.deleteProduct = function(id) {
+      openLayer2Modal({ type: 'delete', id }, null);
+    }
+
+    async function executeAuthorizedAction(action, data) {
+      try {
+        if(action.type === 'add') {
+          await addDoc(collection(db, "products"), action.data);
+          showToast("¡Producto publicado con éxito!");
+        } else if(action.type === 'update') {
+          await updateDoc(doc(db, "products", action.id), action.data);
+          showToast("¡Producto actualizado!");
+        } else if(action.type === 'delete') {
+          await deleteDoc(doc(db, "products", action.id));
+          showToast("Producto eliminado");
+        }
+        resetForm();
+        fetchProducts();
+      } catch(err) {
+        showToast("Error al procesar la operación en la nube");
+      }
+    }
+
+    window.editProduct = function(id) {
+      const p = products.find(item => item.id === id);
+      if(!p) return;
+      document.getElementById('prod-id').value = p.id;
+      document.getElementById('prod-title').value = p.title;
+      document.getElementById('prod-price').value = p.price;
+      document.getElementById('prod-category').value = p.category;
+      document.getElementById('prod-img').value = p.img;
+      document.getElementById('prod-desc').value = p.desc;
+      document.getElementById('form-title').innerText = "Editar Producto";
+      document.getElementById('btn-save').innerText = "Actualizar Producto";
+      document.getElementById('btn-cancel').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.resetForm = function() {
+      document.getElementById('product-form').reset();
+      document.getElementById('prod-id').value = '';
+      document.getElementById('form-title').innerText = "Publicar Producto";
+      document.getElementById('btn-save').innerText = "Guardar Producto";
+      document.getElementById('btn-cancel').classList.add('hidden');
+    }
+
+    fetchProducts();
   </script>
 </body>
 </html>
